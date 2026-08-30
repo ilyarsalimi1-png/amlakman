@@ -1,5 +1,1 @@
-{
-"name":"املاک من نسخه ۲ اصلاح‌شده","short_name":"املاک من","start_url":"./","display":"standalone","orientation":"portrait",
-"background_color":"#f4f6fa","theme_color":"#2563eb","lang":"fa","dir":"rtl",
-"icons":[{"src":"./icons/icon-192.png","sizes":"192x192","type":"image/png"},{"src":"./icons/icon-512.png","sizes":"512x512","type":"image/png"}]
-}
+{"name":"املاک من نسخه ۳","short_name":"املاک من","start_url":"./","display":"standalone","orientation":"portrait","theme_color":"#2563eb","background_color":"#f4f6fa","lang":"fa","dir":"rtl","icons":[{"src":"icons/icon-192.png","sizes":"192x192","type":"image/png"},{"src":"icons/icon-512.png","sizes":"512x512","type":"image/png"}]}

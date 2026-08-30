@@ -4,179 +4,168 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#2563eb">
-<link rel="manifest" href="./manifest.webmanifest">
-<title>املاک من - نسخه ۲ اصلاح‌شده</title>
+<link rel="manifest" href="manifest.webmanifest">
+<title>املاک من - نسخه ۳</title>
 <style>
 *{box-sizing:border-box}body{margin:0;background:#f4f6fa;color:#172033;font-family:Tahoma,Arial,sans-serif}
-header{background:#2563eb;color:#fff;padding:14px;position:sticky;top:0;z-index:3;font-weight:bold}
-main{max-width:1000px;margin:auto;padding:12px 12px 78px}.page{display:none}.page.on{display:block}
-.cards{display:grid;grid-template-columns:1fr 1fr;gap:8px}.card{background:#fff;border:1px solid #ddd;border-radius:13px;padding:12px;margin:8px 0}
-.num{font-size:23px;font-weight:bold}.btn{border:0;border-radius:8px;padding:9px 12px;margin:3px;font-family:inherit;background:#e5e7eb}
-.primary{background:#2563eb;color:#fff}input,select,textarea{width:100%;padding:9px;border:1px solid #ccc;border-radius:8px;font-family:inherit;background:#fff}
-textarea{min-height:75px}.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.full{grid-column:1/-1}
-.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;display:flex;overflow:auto;z-index:5}
-.bottom button{min-width:68px;border:0;background:#fff;padding:7px 2px;font:10px Tahoma}.bottom .sel{color:#2563eb;font-weight:bold}
-.modal{display:none;position:fixed;inset:0;background:#0008;z-index:9;align-items:flex-end}.modal.on{display:flex}
-.box{background:#fff;width:100%;max-height:94vh;overflow:auto;border-radius:18px 18px 0 0;padding:15px}
-.tag{padding:3px 7px;border-radius:20px;background:#dcfce7;font-size:10px}.hot{background:#fee2e2}
+header{background:#2563eb;color:#fff;padding:14px;position:sticky;top:0;z-index:5;font-weight:bold}
+main{max-width:1100px;margin:auto;padding:12px 12px 82px}.page{display:none}.page.on{display:block}
+.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:8px}.card{background:#fff;border:1px solid #ddd;border-radius:13px;padding:12px;margin:8px 0}
+.num{font-size:22px;font-weight:bold}.btn{border:0;border-radius:8px;padding:9px 12px;margin:3px;font-family:inherit;background:#e5e7eb}.primary{background:#2563eb;color:#fff}.danger{background:#fee2e2}.success{background:#dcfce7}
+input,select,textarea{width:100%;padding:9px;border:1px solid #ccc;border-radius:8px;font-family:inherit;background:#fff}textarea{min-height:75px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #ddd;display:flex;overflow:auto;z-index:10}
+.bottom button{min-width:70px;border:0;background:#fff;padding:7px 2px;font:10px Tahoma}.bottom .sel{color:#2563eb;font-weight:bold}
+.modal{display:none;position:fixed;inset:0;background:#0008;z-index:20;align-items:flex-end}.modal.on{display:flex}.box{background:#fff;width:100%;max-height:94vh;overflow:auto;border-radius:18px 18px 0 0;padding:15px}
+.tag{display:inline-block;padding:3px 7px;border-radius:20px;background:#e5e7eb;font-size:10px;margin:2px}
+@media(min-width:700px){.cards{grid-template-columns:repeat(4,1fr)}}
 </style>
 </head>
 <body>
-<header>🏠 املاک من — نسخه ۲ اصلاح‌شده</header>
+<header>🏠 املاک من — نسخه ۳</header>
 <main>
-<section id="home" class="page on"><h2>داشبورد</h2>
-<div class="cards">
+<section id="home" class="page on"><h2>داشبورد</h2><div class="cards">
 <div class="card">👥 مشتریان<div id="nC" class="num">0</div></div>
 <div class="card">🏢 فایل فعال<div id="nP" class="num">0</div></div>
-<div class="card">📞 پیگیری<div id="nF" class="num">0</div></div>
-<div class="card">💰 سهم من<div id="nI" class="num">0</div></div>
+<div class="card">📱 مخاطبین<div id="nA" class="num">0</div></div>
+<div class="card">💰 معاملات<div id="nD" class="num">0</div></div>
 </div><h3>🔥 مشتریان داغ</h3><div id="hot"></div></section>
 
 <section id="customers" class="page"><h2>👥 مشتریان</h2>
 <button class="btn primary" onclick="customerForm()">+ ثبت مشتری</button>
-<input id="cq" placeholder="جستجوی نام، موبایل، محله..." oninput="render()"><div id="ct"></div></section>
+<input id="cq" placeholder="جستجو..." oninput="render()"><div id="ct"></div></section>
 
 <section id="properties" class="page"><h2>🏢 فایل‌ها</h2>
 <button class="btn primary" onclick="propertyForm()">+ ثبت فایل</button>
 <input id="pq" placeholder="جستجوی فایل، محله، مالک..." oninput="render()"><div id="pt"></div></section>
 
+<section id="contacts" class="page"><h2>📱 مخاطبین</h2>
+<button class="btn primary" onclick="contactForm()">+ افزودن مخاطب</button>
+<button class="btn success" onclick="exportContacts()">📤 خروجی CSV</button>
+<button class="btn" onclick="exportPhones()">📱 فقط شماره موبایل</button>
+<input id="aq" placeholder="جستجو نام، موبایل، برچسب..." oninput="render()">
+<div><select id="atype" onchange="render()"><option value="">همه انواع</option>
+<option>دوست و آشنا</option><option>مشتری بالقوه</option><option>مالک</option><option>مستأجر</option><option>خریدار</option><option>فروشنده</option><option>همکار املاک</option><option>سازنده</option><option>سرمایه‌گذار</option><option>سایر</option></select></div>
+<div id="at"></div></section>
+
 <section id="matches" class="page"><h2>🔎 تطبیق مشتری و فایل</h2>
 <select id="selP" onchange="matches()"></select><div id="mt"></div></section>
 
 <section id="followups" class="page"><h2>📞 پیگیری‌ها</h2>
-<button class="btn primary" onclick="simpleForm('followups','📞 پیگیری',['موضوع','شخص','تاریخ','ساعت','نتیجه'])">+ پیگیری</button><div id="ft"></div></section>
+<button class="btn primary" onclick="simpleForm('followups','📞 پیگیری',['موضوع','شخص','تاریخ','ساعت','نتیجه','پیگیری بعدی'])">+ پیگیری</button><div id="ft"></div></section>
 
 <section id="visits" class="page"><h2>👁️ بازدیدها</h2>
-<button class="btn primary" onclick="simpleForm('visits','👁️ بازدید',['مشتری','فایل','تاریخ','نتیجه'])">+ بازدید</button><div id="vt"></div></section>
+<button class="btn primary" onclick="simpleForm('visits','👁️ بازدید',['مشتری','فایل','تاریخ','نتیجه','یادداشت'])">+ بازدید</button><div id="vt"></div></section>
 
 <section id="deals" class="page"><h2>💰 معاملات</h2>
 <button class="btn primary" onclick="simpleForm('deals','💰 معامله',['نوع معامله','فایل/کد','مبلغ معامله','کمیسیون کل','سهم من','کد رهگیری','تاریخ'])">+ معامله</button><div id="dt"></div></section>
 
-<section id="reports" class="page"><h2>📊 گزارش درآمد</h2><div id="rep"></div></section>
-<section id="backup" class="page"><h2>⚙️ پشتیبان</h2>
-<div class="card">اطلاعات این نسخه روی همین گوشی ذخیره می‌شود.<br>
+<section id="backup" class="page"><h2>⚙️ پشتیبان</h2><div class="card">
+اطلاعات این نسخه روی همین گوشی ذخیره می‌شود.<br>
 <button class="btn primary" onclick="backup()">دانلود پشتیبان</button>
 <label class="btn">بازیابی<input type="file" hidden accept=".json" onchange="restore(event)"></label>
-<button class="btn" onclick="wipe()">حذف همه اطلاعات</button></div></section>
+<button class="btn danger" onclick="wipe()">حذف همه اطلاعات</button>
+</div></section>
 </main>
 
 <nav class="bottom">
 <button data-p="home">🏠<br>خانه</button><button data-p="customers">👥<br>مشتری</button>
 <button data-p="properties">🏢<br>فایل</button><button data-p="matches">🔎<br>تطبیق</button>
-<button data-p="followups">📞<br>پیگیری</button><button data-p="visits">👁️<br>بازدید</button>
-<button data-p="deals">💰<br>معامله</button><button data-p="reports">📊<br>گزارش</button>
+<button data-p="contacts">📱<br>مخاطبین</button><button data-p="followups">📞<br>پیگیری</button>
+<button data-p="visits">👁️<br>بازدید</button><button data-p="deals">💰<br>معامله</button>
 <button data-p="backup">⚙️<br>پشتیبان</button>
 </nav>
-
 <div id="modal" class="modal"><div class="box" id="box"></div></div>
 
 <script>
-const KEY='amlakman_v2_fixed';
-let db=JSON.parse(localStorage.getItem(KEY)||'{"customers":[],"properties":[],"followups":[],"visits":[],"deals":[]}');
+const KEY="amlakman_v3";
+let db=JSON.parse(localStorage.getItem(KEY)||'{"customers":[],"properties":[],"contacts":[],"followups":[],"visits":[],"deals":[]}');
 const $=id=>document.getElementById(id);
-const esc=x=>String(x??'').replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));
-const save=()=>{localStorage.setItem(KEY,JSON.stringify(db));render()};
-function showPage(id){
- document.querySelectorAll('.page').forEach(x=>x.classList.remove('on'));
- const p=$(id); if(p)p.classList.add('on');
- document.querySelectorAll('.bottom button').forEach(x=>x.classList.toggle('sel',x.dataset.p===id));
- window.scrollTo(0,0);
-}
-document.querySelector('.bottom').addEventListener('click',e=>{
- const b=e.target.closest('button[data-p]'); if(b) showPage(b.dataset.p);
-});
-showPage('home');
-
-function openModal(html){$('box').innerHTML=html;$('modal').classList.add('on')}
-function closeModal(){$('modal').classList.remove('on')}
-$('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+const esc=x=>String(x??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));
+function save(){localStorage.setItem(KEY,JSON.stringify(db));render()}
+function field(label,key,value="",req=false){return `<div><label>${label}</label><input name="${key}" value="${esc(value)}" ${req?"required":""}></div>`}
+function sel(label,key,value,arr){return `<div><label>${label}</label><select name="${key}">${arr.map(x=>`<option ${x===value?"selected":""}>${esc(x)}</option>`).join("")}</select></div>`}
+function showPage(id){document.querySelectorAll(".page").forEach(x=>x.classList.remove("on"));$(id).classList.add("on");document.querySelectorAll(".bottom button").forEach(x=>x.classList.toggle("sel",x.dataset.p===id))}
+document.querySelector(".bottom").onclick=e=>{let b=e.target.closest("[data-p]");if(b)showPage(b.dataset.p)};
+function openModal(h){$("box").innerHTML=h;$("modal").classList.add("on")}function closeModal(){$("modal").classList.remove("on")}
+$("modal").onclick=e=>{if(e.target.id==="modal")closeModal()};
 
 function customerForm(x={}){
- openModal(`<h3>👤 ثبت مشتری و نیاز ملکی</h3>
-<form onsubmit="saveForm(event,'customers','${x.id||''}')"><div class="grid">
-${field('نام *','name',x.name,true)}${field('موبایل','phone',x.phone)}
-${field('نوع مشتری','type',x.type)}${field('وضعیت (داغ/گرم/فعال/سرد)','status',x.status)}
-${field('منبع','source',x.source)}${field('پیگیری بعدی','next',x.next)}
-${field('نوع نیاز (خرید/اجاره/رهن/فروش)','dealType',x.dealType)}${field('محله','area',x.area)}
-${field('حداقل متراژ','minMeter',x.minMeter)}${field('حداکثر متراژ','maxMeter',x.maxMeter)}
-${field('حداقل خواب','minBed',x.minBed)}${field('حداکثر خواب','maxBed',x.maxBed)}
-${field('طبقه مطلوب','floor',x.floor)}${field('حداکثر سن بنا','maxAge',x.maxAge)}
-${field('پارکینگ','parking',x.parking)}${field('انباری','storage',x.storage)}
-${field('آسانسور','elevator',x.elevator)}${field('بالکن','balcony',x.balcony)}
-${field('حداکثر بودجه خرید','buyBudget',x.buyBudget)}${field('حداکثر رهن','deposit',x.deposit)}
-${field('حداکثر اجاره','rent',x.rent)}${field('یادداشت','notes',x.notes)}
-</div><button class="btn primary">ذخیره</button></form>`);
-}
-function propertyForm(x={}){
- openModal(`<h3>🏢 ثبت فایل ملکی</h3>
-<form onsubmit="saveForm(event,'properties','${x.id||''}')"><div class="grid">
-${field('کد فایل','code',x.code)}${field('نوع معامله','dealType',x.dealType)}
-${field('نوع ملک','propertyType',x.propertyType)}${field('محله *','area',x.area,true)}
-${field('متراژ','meter',x.meter)}${field('تعداد خواب','bed',x.bed)}
-${field('طبقه','floor',x.floor)}${field('تعداد طبقات','floors',x.floors)}
-${field('تعداد واحد','units',x.units)}${field('سال ساخت','year',x.year)}
-${field('پارکینگ','parking',x.parking)}${field('انباری','storage',x.storage)}
-${field('آسانسور','elevator',x.elevator)}${field('بالکن','balcony',x.balcony)}
-${field('وضعیت سند','deed',x.deed)}${field('قیمت فروش','price',x.price)}
-${field('رهن','deposit',x.deposit)}${field('اجاره ماهانه','rent',x.rent)}
-${field('نام مالک','owner',x.owner)}${field('موبایل مالک','phone',x.phone)}
-${field('وضعیت فایل','status',x.status)}${field('آدرس / توضیحات','notes',x.notes)}
-</div><button class="btn primary">ذخیره</button></form>`);
-}
-function field(label,key,val,req=false){return `<div><label>${label}</label><input name="${key}" ${req?'required':''} value="${esc(val)}"></div>`}
-function simpleForm(type,title,names){
- openModal(`<h3>${title}</h3><form onsubmit="saveForm(event,'${type}','')"><div class="grid">
-${names.map(n=>field(n,n,'')).join('')}</div><button class="btn primary">ذخیره</button></form>`);
-}
-function saveForm(e,type,old){e.preventDefault();let o=Object.fromEntries(new FormData(e.target));o.id=old||Date.now();let i=db[type].findIndex(x=>String(x.id)===String(o.id));if(i<0)db[type].unshift(o);else db[type][i]=o;closeModal();save()}
+let t=new Date().toISOString().slice(0,10);
+openModal(`<h3>👤 ثبت مشتری و نیاز</h3><form onsubmit="saveForm(event,'customers','${x.id||""}')"><div class="grid">
+${field("تاریخ ثبت","createdAt",x.createdAt||t,true)}${field("نام *","name",x.name,true)}${field("موبایل","phone",x.phone)}
+${sel("نوع مشتری","type",x.type||"خریدار",["خریدار","مستأجر","فروشنده","موجر","سازنده","سرمایه‌گذار"])}
+${sel("وضعیت","status",x.status||"فعال",["داغ","گرم","فعال","سرد","معامله‌شده"])}
+${sel("نوع درخواست","dealType",x.dealType||"خرید",["خرید","فروش","اجاره","رهن کامل","مشارکت","سرمایه‌گذاری"])}
+${field("محدوده","area",x.area)}${field("حداقل متراژ","minMeter",x.minMeter)}${field("حداکثر متراژ","maxMeter",x.maxMeter)}
+${field("حداقل خواب","minBed",x.minBed)}${field("حداکثر خواب","maxBed",x.maxBed)}
+${sel("طبقه","floor",x.floor||"مهم نیست",["مهم نیست","همکف","اول","دوم","سوم","چهارم","پنجم","ششم به بالا"])}
+${sel("پارکینگ","parking",x.parking||"مهم نیست",["مهم نیست","حتماً داشته باشد","نداشتن قابل قبول است","حداقل ۱","حداقل ۲"])}
+${sel("انباری","storage",x.storage||"مهم نیست",["مهم نیست","حتماً داشته باشد","نداشتن قابل قبول است"])}
+${sel("آسانسور","elevator",x.elevator||"مهم نیست",["مهم نیست","حتماً داشته باشد","نداشتن قابل قبول است"])}
+${sel("بالکن","balcony",x.balcony||"مهم نیست",["مهم نیست","حتماً داشته باشد","نداشتن قابل قبول است"])}
+${field("حداکثر بودجه خرید","buyBudget",x.buyBudget)}${field("حداکثر رهن","deposit",x.deposit)}${field("حداکثر اجاره","rent",x.rent)}
+${field("مهلت اجاره","rentDeadline",x.rentDeadline)}${sel("واحد مهلت","rentDeadlineUnit",x.rentDeadlineUnit||"ماه",["ماه","روز","تا تاریخ"])}
+${field("پیگیری بعدی","next",x.next)}${field("توضیحات","notes",x.notes)}</div>
+<button class="btn primary">ذخیره</button></form>`)}
 
+function propertyForm(x={}){
+let t=new Date().toISOString().slice(0,10);
+openModal(`<h3>🏢 ثبت فایل ملک</h3><form onsubmit="saveForm(event,'properties','${x.id||""}')"><div class="grid">
+${field("تاریخ ثبت","createdAt",x.createdAt||t,true)}${field("کد فایل","code",x.code)}
+${sel("نوع معامله","dealType",x.dealType||"فروش",["فروش","اجاره","رهن کامل","مشارکت","پیش‌فروش"])}
+${sel("نوع ملک","propertyType",x.propertyType||"آپارتمان",["آپارتمان","خانه","کلنگی","زمین","مغازه","اداری","ویلا","سایر"])}
+${field("استان","province",x.province)}${field("شهر","city",x.city)}${field("منطقه","district",x.district)}${field("محله","area",x.area,true)}
+${field("خیابان اصلی","street",x.street)}${field("کوچه/خیابان فرعی","alley",x.alley)}${field("پلاک","plaque",x.plaque)}${field("واحد","unit",x.unit)}
+${field("کدپستی","postal",x.postal)}
+${sel("نمایش آدرس","addressPrivacy",x.addressPrivacy||"فقط محله",["آدرس دقیق","فقط محله","فقط محدوده","محرمانه — فقط مشاور"])}
+${field("متراژ","meter",x.meter)}${field("تعداد خواب","bed",x.bed)}
+${sel("طبقه","floor",x.floor||"همکف",["همکف","اول","دوم","سوم","چهارم","پنجم","ششم به بالا"])}
+${field("تعداد طبقات","floors",x.floors)}${field("تعداد واحد","units",x.units)}${field("سال ساخت","year",x.year)}
+${sel("پارکینگ","parking",x.parking||"دارد",["دارد","ندارد","مزاحم","مشاع","تعداد ۱","تعداد ۲"])}
+${sel("انباری","storage",x.storage||"دارد",["دارد","ندارد","مشاع"])}
+${sel("آسانسور","elevator",x.elevator||"دارد",["دارد","ندارد"])}
+${sel("بالکن","balcony",x.balcony||"دارد",["دارد","ندارد"])}
+${sel("وضعیت سند","deed",x.deed||"تک‌برگ",["تک‌برگ","شش‌دانگ","قولنامه‌ای","در رهن","مشاع","سایر"])}
+${field("قیمت کل فروش","price",x.price)}${field("قیمت هر متر","pricePerMeter",x.pricePerMeter)}
+${field("رهن","deposit",x.deposit)}${field("اجاره ماهانه","rent",x.rent)}
+${field("مهلت مدنظر مالک","rentDeadline",x.rentDeadline)}${sel("واحد مهلت","rentDeadlineUnit",x.rentDeadlineUnit||"ماه",["ماه","روز","تا تاریخ"])}
+${field("نام مالک","owner",x.owner)}${field("موبایل مالک","phone",x.phone)}
+${sel("وضعیت فایل","status",x.status||"فعال",["فعال","بازدید","مذاکره","رزرو","معامله شد","بایگانی"])}
+${field("توضیحات","notes",x.notes)}</div><button class="btn primary">ذخیره</button></form>`);
+let p=document.querySelector('#modal input[name="price"]'),m=document.querySelector('#modal input[name="meter"]'),q=document.querySelector('#modal input[name="pricePerMeter"]');
+if(p&&m&&q){let c=()=>{let a=Number(p.value.replace(/[,،\s]/g,"")),b=Number(m.value);if(a&&b)q.value=Math.round(a/b)};p.oninput=c;m.oninput=c}
+}
+
+function contactForm(x={}){
+let t=new Date().toISOString().slice(0,10);
+openModal(`<h3>📱 ثبت مخاطب</h3><form onsubmit="saveForm(event,'contacts','${x.id||""}')"><div class="grid">
+${field("تاریخ ثبت","createdAt",x.createdAt||t,true)}${field("نام و نام خانوادگی *","name",x.name,true)}
+${field("موبایل اصلی *","phone",x.phone,true)}${field("موبایل دوم","phone2",x.phone2)}
+${sel("نوع مخاطب","type",x.type||"دوست و آشنا",["دوست و آشنا","مشتری بالقوه","مالک","مستأجر","خریدار","فروشنده","همکار املاک","سازنده","سرمایه‌گذار","سایر"])}
+${field("برچسب‌ها","tags",x.tags)}${field("محله","area",x.area)}${field("منبع آشنایی","source",x.source)}${field("توضیحات","notes",x.notes)}</div>
+<button class="btn primary">ذخیره</button></form>`)}
+
+function simpleForm(type,title,names){openModal(`<h3>${title}</h3><form onsubmit="saveForm(event,'${type}','')"><div class="grid">${names.map(n=>field(n,n,"")).join("")}</div><button class="btn primary">ذخیره</button></form>`)}
+function saveForm(e,type,id){e.preventDefault();let o=Object.fromEntries(new FormData(e.target));o.id=id||Date.now();if(!o.createdAt)o.createdAt=new Date().toISOString().slice(0,10);let i=db[type].findIndex(x=>String(x.id)===String(o.id));if(i<0)db[type].unshift(o);else db[type][i]=o;closeModal();save()}
+function remove(type,id){if(confirm("حذف شود؟")){db[type]=db[type].filter(x=>String(x.id)!==String(id));save()}}
 function render(){
- $('nC').textContent=db.customers.length;
- $('nP').textContent=db.properties.filter(x=>x.status!=='بایگانی'&&x.status!=='معامله شد').length;
- $('nF').textContent=db.followups.length;
- $('nI').textContent=db.deals.reduce((s,x)=>s+(Number(String(x['سهم من']||'').replace(/[,،]/g,''))||0),0).toLocaleString('fa-IR');
- const cq=($('cq')?.value||'').toLowerCase(),pq=($('pq')?.value||'').toLowerCase();
- $('ct').innerHTML=db.customers.filter(x=>JSON.stringify(x).toLowerCase().includes(cq)).map(x=>`<div class="card"><b>${esc(x.name)}</b> — ${esc(x.phone)}<br>
-${esc(x.dealType)} | ${esc(x.area)} | ${esc(x.minMeter)} تا ${esc(x.maxMeter)} متر | خواب ${esc(x.minBed)}-${esc(x.maxBed)}<br>
-رهن: ${esc(x.deposit)} | اجاره: ${esc(x.rent)} | بودجه: ${esc(x.buyBudget)}<br>
-<span class="tag ${x.status==='داغ'?'hot':''}">${esc(x.status)}</span>
-<button class="btn" onclick='customerForm(${JSON.stringify(x)})'>ویرایش</button></div>`).join('')||'<div class="card">مشتری ثبت نشده.</div>';
- $('pt').innerHTML=db.properties.filter(x=>JSON.stringify(x).toLowerCase().includes(pq)).map(x=>`<div class="card"><b>${esc(x.code||'-')}</b> — ${esc(x.dealType)} — ${esc(x.area)}<br>
-${esc(x.meter)} متر | ${esc(x.bed)} خواب | طبقه ${esc(x.floor)} | پارکینگ ${esc(x.parking)} | انباری ${esc(x.storage)}<br>
-فروش: ${esc(x.price)} | رهن: ${esc(x.deposit)} | اجاره: ${esc(x.rent)}<br>
-مالک: ${esc(x.owner)} — ${esc(x.phone)}
-<button class="btn" onclick='propertyForm(${JSON.stringify(x)})'>ویرایش</button></div>`).join('')||'<div class="card">فایل ثبت نشده.</div>';
- $('hot').innerHTML=db.customers.filter(x=>x.status==='داغ').map(x=>`<div class="card">🔥 <b>${esc(x.name)}</b> — ${esc(x.phone)}<br>${esc(x.dealType)} | ${esc(x.area)}</div>`).join('')||'<div class="card">مشتری داغی ثبت نشده.</div>';
- $('ft').innerHTML=db.followups.map(x=>`<div class="card">${Object.entries(x).filter(([k])=>k!=='id').map(([k,v])=>`<b>${esc(k)}:</b> ${esc(v)}`).join(' | ')}</div>`).join('')||'<div class="card">پیگیری ثبت نشده.</div>';
- $('vt').innerHTML=db.visits.map(x=>`<div class="card">${Object.entries(x).filter(([k])=>k!=='id').map(([k,v])=>`<b>${esc(k)}:</b> ${esc(v)}`).join(' | ')}</div>`).join('')||'<div class="card">بازدید ثبت نشده.</div>';
- $('dt').innerHTML=db.deals.map(x=>`<div class="card">${Object.entries(x).filter(([k])=>k!=='id').map(([k,v])=>`<b>${esc(k)}:</b> ${esc(v)}`).join(' | ')}</div>`).join('')||'<div class="card">معامله ثبت نشده.</div>';
- let c=db.deals.reduce((s,x)=>s+(Number(String(x['کمیسیون کل']||'').replace(/[,،]/g,''))||0),0);
- let i=db.deals.reduce((s,x)=>s+(Number(String(x['سهم من']||'').replace(/[,،]/g,''))||0),0);
- $('rep').innerHTML=`<div class="cards"><div class="card">تعداد معاملات<div class="num">${db.deals.length}</div></div><div class="card">کمیسیون کل<div class="num">${c.toLocaleString('fa-IR')}</div></div><div class="card">سهم من<div class="num">${i.toLocaleString('fa-IR')}</div></div></div>`;
- const s=$('selP'),old=s.value;
- s.innerHTML=db.properties.map(x=>`<option value="${x.id}">${esc(x.code||'-')} — ${esc(x.area)} — ${esc(x.meter)} متر</option>`).join('');
- if([...s.options].some(o=>o.value===old))s.value=old;
- matches();
+$("nC").textContent=db.customers.length;$("nP").textContent=db.properties.filter(x=>x.status!=="بایگانی"&&x.status!=="معامله شد").length;$("nA").textContent=db.contacts.length;$("nD").textContent=db.deals.length;
+let cq=($("cq")?.value||"").toLowerCase(),pq=($("pq")?.value||"").toLowerCase(),aq=($("aq")?.value||"").toLowerCase(),ty=$("atype")?.value||"";
+$("ct").innerHTML=db.customers.filter(x=>JSON.stringify(x).toLowerCase().includes(cq)).map(x=>`<div class="card"><b>${esc(x.name)}</b> — ${esc(x.phone)}<br>${esc(x.dealType)} | ${esc(x.area)} | ${esc(x.minMeter)}-${esc(x.maxMeter)} متر | خواب ${esc(x.minBed)}-${esc(x.maxBed)}<br>ثبت: ${esc(x.createdAt)} | رهن: ${esc(x.deposit)} | اجاره: ${esc(x.rent)} | مهلت: ${esc(x.rentDeadline)} ${esc(x.rentDeadlineUnit)}<br><span class="tag">${esc(x.status)}</span> <button class="btn" onclick='customerForm(${JSON.stringify(x)})'>ویرایش</button></div>`).join("")||'<div class="card">مشتری ثبت نشده.</div>';
+$("pt").innerHTML=db.properties.filter(x=>JSON.stringify(x).toLowerCase().includes(pq)).map(x=>`<div class="card"><b>${esc(x.code||"-")}</b> — ${esc(x.dealType)} — ${esc(x.propertyType)}<br>${esc(x.province)} ${esc(x.city)} ${esc(x.district)} ${esc(x.area)} — ${esc(x.street)} ${esc(x.alley)} پلاک ${esc(x.plaque)} واحد ${esc(x.unit)}<br>${esc(x.meter)} متر | ${esc(x.bed)} خواب | طبقه ${esc(x.floor)} | پارکینگ ${esc(x.parking)} | انباری ${esc(x.storage)} | آسانسور ${esc(x.elevator)}<br>ثبت: ${esc(x.createdAt)} | فروش: ${esc(x.price)} | متری: ${esc(x.pricePerMeter)} | رهن: ${esc(x.deposit)} | اجاره: ${esc(x.rent)} | مهلت: ${esc(x.rentDeadline)} ${esc(x.rentDeadlineUnit)}<br>مالک: ${esc(x.owner)} — ${esc(x.phone)} <button class="btn" onclick='propertyForm(${JSON.stringify(x)})'>ویرایش</button></div>`).join("")||'<div class="card">فایل ثبت نشده.</div>';
+$("at").innerHTML=db.contacts.filter(x=>(!aq||JSON.stringify(x).toLowerCase().includes(aq))&&(!ty||x.type===ty)).map(x=>`<div class="card"><b>${esc(x.name)}</b> — ${esc(x.phone)}${x.phone2?" / "+esc(x.phone2):""}<br>${esc(x.type)} | ${esc(x.area)} | ${esc(x.tags)} | ثبت ${esc(x.createdAt)}<br>${esc(x.notes)}<br><button class="btn" onclick='contactForm(${JSON.stringify(x)})'>ویرایش</button><button class="btn danger" onclick="remove('contacts','${x.id}')">حذف</button><button class="btn success" onclick="promote('${x.id}')">تبدیل به مشتری</button></div>`).join("")||'<div class="card">مخاطبی پیدا نشد.</div>';
+$("hot").innerHTML=db.customers.filter(x=>x.status==="داغ").map(x=>`<div class="card">🔥 <b>${esc(x.name)}</b> — ${esc(x.phone)}</div>`).join("")||'<div class="card">مشتری داغی ثبت نشده.</div>';
+$("ft").innerHTML=list(db.followups);$("vt").innerHTML=list(db.visits);$("dt").innerHTML=list(db.deals);
+let sp=$("selP"),old=sp.value;sp.innerHTML=db.properties.map(x=>`<option value="${x.id}">${esc(x.code||"-")} — ${esc(x.area)} — ${esc(x.meter)} متر</option>`).join("");if([...sp.options].some(o=>o.value===old))sp.value=old;matches()
 }
-function matches(){
- const p=db.properties.find(x=>String(x.id)===String($('selP').value));
- if(!p){$('mt').innerHTML='<div class="card">ابتدا فایل ثبت کنید.</div>';return}
- const a=db.customers.map(c=>{
-  let z=0,w=0,A=(ok,n)=>{w+=n;if(ok)z+=n};
-  A(!c.area||!p.area||p.area.includes(c.area)||c.area.includes(p.area),25);
-  A(!c.minMeter||Number(p.meter)>=Number(c.minMeter),15);
-  A(!c.maxMeter||Number(p.meter)<=Number(c.maxMeter),15);
-  A(!c.minBed||Number(p.bed)>=Number(c.minBed),8);
-  A(!c.maxBed||Number(p.bed)<=Number(c.maxBed),8);
-  A(!c.dealType||c.dealType===p.dealType,15);
-  return [c,w?Math.round(z/w*100):0];
- }).sort((a,b)=>b[1]-a[1]);
- $('mt').innerHTML=a.slice(0,10).map(r=>`<div class="card">👤 <b>${esc(r[0].name)}</b> — ${r[1]}% تطابق<br>${esc(r[0].phone)} | ${esc(r[0].area)} | ${esc(r[0].dealType)}</div>`).join('')||'<div class="card">مشتری ثبت نشده.</div>';
-}
-function backup(){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(db)],{type:'application/json'}));a.download='amlakman-v2-backup.json';a.click()}
-function restore(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{db=JSON.parse(r.result);save();alert('بازیابی با موفقیت انجام شد')}catch{alert('فایل پشتیبان معتبر نیست')}};r.readAsText(f)}
-function wipe(){if(confirm('همه اطلاعات حذف شود؟')){db={customers:[],properties:[],followups:[],visits:[],deals:[]};save()}}
-if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
-render();
-</script>
-</body></html>
+function list(a){return a.map(x=>`<div class="card">${Object.entries(x).filter(([k])=>k!=="id").map(([k,v])=>`<b>${esc(k)}:</b> ${esc(v)}`).join(" | ")}</div>`).join("")||'<div class="card">موردی ثبت نشده.</div>'}
+function matches(){let p=db.properties.find(x=>String(x.id)===String($("selP").value));if(!p){$("mt").innerHTML='<div class="card">ابتدا فایل ثبت کنید.</div>';return}let a=db.customers.map(c=>{let z=0,w=0,A=(ok,n)=>{w+=n;if(ok)z+=n};A(!c.area||!p.area||p.area.includes(c.area)||c.area.includes(p.area),25);A(!c.minMeter||Number(p.meter)>=Number(c.minMeter),15);A(!c.maxMeter||Number(p.meter)<=Number(c.maxMeter),15);A(!c.minBed||Number(p.bed)>=Number(c.minBed),8);A(!c.maxBed||Number(p.bed)<=Number(c.maxBed),8);A(!c.dealType||c.dealType===p.dealType,15);return[c,w?Math.round(z/w*100):0]}).sort((a,b)=>b[1]-a[1]);$("mt").innerHTML=a.slice(0,10).map(r=>`<div class="card">👤 <b>${esc(r[0].name)}</b> — ${r[1]}% تطابق<br>${esc(r[0].phone)} | ${esc(r[0].area)} | ${esc(r[0].dealType)}</div>`).join("")||'<div class="card">مشتری ثبت نشده.</div>'}
+function promote(id){let x=db.contacts.find(c=>String(c.id)===String(id));if(!x)return;db.customers.unshift({id:Date.now(),createdAt:new Date().toISOString().slice(0,10),name:x.name,phone:x.phone,type:x.type,status:"فعال",source:x.source,area:x.area,notes:x.notes});save();showPage("customers");alert("مخاطب به مشتری تبدیل شد.")}
+function dl(name,text,type){let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;a.click()}
+function exportContacts(){let h=["نام","موبایل","موبایل دوم","نوع","محله","برچسب","منبع","توضیحات","تاریخ ثبت"],rows=db.contacts.map(x=>[x.name,x.phone,x.phone2,x.type,x.area,x.tags,x.source,x.notes,x.createdAt].map(v=>`"${String(v??"").replace(/"/g,'""')}"`).join(","));dl("amlakman-contacts.csv","\ufeff"+h.join(",")+"\r\n"+rows.join("\r\n"),"text/csv")}
+function exportPhones(){dl("amlakman-phones.txt",db.contacts.map(x=>x.phone).filter(Boolean).join("\r\n"),"text/plain")}
+function backup(){dl("amlakman-v3-backup.json",JSON.stringify(db),"application/json")}
+function restore(e){let r=new FileReader();r.onload=()=>{try{db=JSON.parse(r.result);save();alert("بازیابی شد")}catch{alert("فایل معتبر نیست")}};r.readAsText(e.target.files[0])}
+function wipe(){if(confirm("همه اطلاعات حذف شود؟")){db={customers:[],properties:[],contacts:[],followups:[],visits:[],deals:[]};save()}}
+if("serviceWorker"in navigator)navigator.serviceWorker.register("sw.js").catch(()=>{});render();
+</script></body></html>

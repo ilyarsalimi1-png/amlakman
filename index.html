@@ -1,0 +1,80 @@
+<!doctype html><html lang="fa" dir="rtl"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#1769aa"><link rel="manifest" href="manifest.webmanifest">
+<title>املاک من</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Tahoma,Arial,sans-serif;background:#f3f6f9;color:#17212b;font-size:17px}
+header{background:#1769aa;color:#fff;padding:16px;position:sticky;top:0;z-index:5}h1{margin:0;font-size:24px}
+main{padding:12px 10px 80px;max-width:900px;margin:auto}.page{display:none}.page.active{display:block}
+.card{background:#fff;border-radius:14px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px #0001}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}label{display:block;font-weight:bold;margin:4px 0}
+input,select,textarea,button{font:inherit}input,select,textarea{width:100%;padding:11px;border:1px solid #ccd4dc;border-radius:9px;background:white}textarea{min-height:75px}.full{grid-column:1/-1}
+button{border:0;border-radius:9px;padding:10px 13px;background:#1769aa;color:white;font-weight:bold;margin:3px}.secondary{background:#607d8b}.danger{background:#c62828}.success{background:#2e7d32}
+.actions{display:flex;flex-wrap:wrap}.hidden{display:none!important}.muted{color:#667;font-size:14px}
+table{width:100%;border-collapse:collapse;margin-top:9px;background:#fff;font-size:15px}th{background:#1769aa;color:#fff;padding:8px}td{padding:8px;border-bottom:1px solid #ddd}tbody tr:nth-child(even){background:#eef5fb}
+.stat{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stat div{background:#e8f2fa;padding:15px;text-align:center;border-radius:12px}.num{font-size:27px;font-weight:bold}
+nav{position:fixed;bottom:0;right:0;left:0;background:#fff;border-top:1px solid #ccd4dc;display:flex;z-index:10;box-shadow:0 -2px 8px #0001}nav button{flex:1;background:#fff;color:#334;border-radius:0;margin:0;padding:8px 2px;font-size:12px}
+@media(max-width:600px){.grid{grid-template-columns:1fr}table{font-size:14px;display:block;overflow-x:auto;white-space:nowrap}}
+</style></head><body>
+<header><h1>🏠 املاک من</h1></header><main>
+
+<section id="home" class="page active"><div class="card"><h2>داشبورد</h2><div class="stat"><div>مشتری<br><span class="num" id="nc">0</span></div><div>ملک<br><span class="num" id="np">0</span></div></div></div>
+<div class="card"><button onclick="page('customers')">➕ ثبت مشتری</button><button onclick="page('properties')">🏠 ثبت ملک</button><button onclick="page('match')">🔎 تطبیق</button></div></section>
+
+<section id="customers" class="page"><div class="card"><h2>ثبت مشتری</h2><div class="grid">
+<div><label>نوع درخواست</label><select id="ct" onchange="tc()"><option>خرید</option><option>اجاره</option><option>رهن کامل</option></select></div>
+<div><label>نام</label><input id="cn"></div><div><label>موبایل</label><input id="cm"></div><div><label>محدوده</label><input id="ca"></div>
+<div><label>حداقل متراژ</label><input id="cmin" type="number"></div><div><label>حداکثر متراژ</label><input id="cmax" type="number"></div>
+<div><label>خواب</label><select id="cb"><option value="0">مهم نیست</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+<div><label>پارکینگ</label><select id="cp"><option>مهم نیست</option><option>دارد</option><option>ندارد</option></select></div>
+<div id="buy" class="full"><label>حداقل بودجه</label><input id="cminp" type="number"><label>حداکثر بودجه</label><input id="cmaxp" type="number"></div>
+<div id="rent" class="full hidden"><label>حداکثر ودیعه</label><input id="cdep" type="number"><label>حداکثر اجاره</label><input id="cr" type="number"></div>
+<div id="full" class="full hidden"><label>حداکثر رهن کامل</label><input id="cfd" type="number"></div>
+<div class="full"><label>توضیحات</label><textarea id="cnote"></textarea></div></div>
+<button class="success" onclick="saveC()">ذخیره مشتری</button><button class="secondary" onclick="clearC()">پاک کردن</button></div>
+<div class="card"><h2>مشتریان</h2><div id="cl"></div></div></section>
+
+<section id="properties" class="page"><div class="card"><h2>ثبت ملک</h2><div class="grid">
+<div><label>نوع معامله</label><select id="pt" onchange="tp()"><option>فروش</option><option>اجاره</option><option>رهن کامل</option></select></div>
+<div><label>مالک / عنوان</label><input id="pn"></div><div><label>موبایل</label><input id="pm"></div><div><label>محدوده</label><input id="pa"></div>
+<div><label>متراژ</label><input id="pmet" type="number"></div><div><label>خواب</label><select id="pb"><option value="0">--</option><option>1</option><option>2</option><option>3</option><option>4</option></select></div>
+<div><label>پارکینگ</label><select id="pp"><option>--</option><option>دارد</option><option>ندارد</option></select></div>
+<div id="sale" class="full"><label>قیمت کل</label><input id="price" type="number"><label>قیمت هر متر</label><input id="ppm" type="number"></div>
+<div id="pr" class="full hidden"><label>ودیعه</label><input id="dep" type="number"><label>اجاره ماهانه</label><input id="rentv" type="number"></div>
+<div id="pf" class="full hidden"><label>رهن کامل</label><input id="fd" type="number"></div>
+<div class="full"><label>آدرس</label><textarea id="addr"></textarea></div><div class="full"><label>توضیحات</label><textarea id="pnote"></textarea></div>
+</div><button class="success" onclick="saveP()">ذخیره ملک</button><button class="secondary" onclick="clearP()">پاک کردن</button></div>
+<div class="card"><h2>املاک</h2><div id="pl"></div></div></section>
+
+<section id="match" class="page"><div class="card"><h2>تطبیق</h2><select id="selc" onchange="match()"><option value="">انتخاب مشتری</option></select><div id="ml"></div></div></section>
+
+<section id="contacts" class="page"><div class="card"><h2>دفتر تلفن</h2><input id="xn" placeholder="نام"><input id="xp" placeholder="موبایل" style="margin-top:8px"><input id="xx" placeholder="توضیح" style="margin-top:8px"><button class="success" onclick="saveX()">ذخیره</button><button class="secondary" onclick="csv()">خروجی CSV</button></div><div class="card" id="xl"></div></section>
+
+<section id="backup" class="page"><div class="card"><h2>پشتیبان</h2><button onclick="backup()">دانلود پشتیبان</button><button class="secondary" onclick="document.getElementById('file').click()">بازیابی</button><input id="file" type="file" accept=".json" class="hidden" onchange="restore(event)"></div></section>
+</main>
+
+<nav><button onclick="page('home')">🏠<br>خانه</button><button onclick="page('customers')">👤<br>مشتری</button><button onclick="page('properties')">🏢<br>ملک</button><button onclick="page('match')">🔎<br>تطبیق</button><button onclick="page('contacts')">📞<br>مخاطب</button><button onclick="page('backup')">💾<br>پشتیبان</button></nav>
+
+<script>
+const K='amlakman_v5';let d=JSON.parse(localStorage.getItem(K)||'{"c":[],"p":[],"x":[]}');
+const $=x=>document.getElementById(x),v=x=>$(x).value.trim();function save(){localStorage.setItem(K,JSON.stringify(d));render()}
+function page(x){document.querySelectorAll('.page').forEach(e=>e.classList.remove('active'));$(x).classList.add('active');render();scrollTo(0,0)}
+function tc(){let t=v('ct');$('buy').classList.toggle('hidden',t!='خرید');$('rent').classList.toggle('hidden',t!='اجاره');$('full').classList.toggle('hidden',t!='رهن کامل')}
+function tp(){let t=v('pt');$('sale').classList.toggle('hidden',t!='فروش');$('pr').classList.toggle('hidden',t!='اجاره');$('pf').classList.toggle('hidden',t!='رهن کامل')}
+function clearC(){['cn','cm','ca','cmin','cmax','cminp','cmaxp','cdep','cr','cfd','cnote'].forEach(x=>$(x).value='');$('ct').value='خرید';tc()}
+function clearP(){['pn','pm','pa','pmet','price','ppm','dep','rentv','fd','addr','pnote'].forEach(x=>$(x).value='');$('pt').value='فروش';tp()}
+function saveC(){if(!v('cn')||!v('cm'))return alert('نام و موبایل الزامی است');d.c.push({id:Date.now(),t:v('ct'),n:v('cn'),m:v('cm'),a:v('ca'),min:+v('cmin')||0,max:+v('cmax')||999999,bed:+v('cb'),park:v('cp'),minp:+v('cminp')||0,maxp:+v('cmaxp')||1e15,dep:+v('cdep')||1e15,r:+v('cr')||1e15,fd:+v('cfd')||1e15,note:v('cnote')});save();clearC();alert('ذخیره شد')}
+function saveP(){if(!v('pn')||!v('pmet'))return alert('عنوان و متراژ الزامی است');d.p.push({id:Date.now(),t:v('pt'),n:v('pn'),m:v('pm'),a:v('pa'),met:+v('pmet'),bed:+v('pb'),park:v('pp'),price:+v('price')||0,ppm:+v('ppm')||0,dep:+v('dep')||0,r:+v('rentv')||0,fd:+v('fd')||0,addr:v('addr'),note:v('pnote')});save();clearP();alert('ذخیره شد')}
+function del(a,id){if(confirm('حذف شود؟')){d[a]=d[a].filter(x=>x.id!=id);save()}}
+function render(){ $('nc').textContent=d.c.length;$('np').textContent=d.p.length;
+$('cl').innerHTML=d.c.map(x=>`<table><tr><th>${x.n}</th><th>${x.t}</th></tr><tr><td>${x.m}</td><td>${x.a||'—'}</td></tr><tr><td>${x.min}-${x.max} متر</td><td><button class="danger" onclick="del('c',${x.id})">حذف</button></td></tr></table>`).join('')||'<p class="muted">موردی ثبت نشده.</p>';
+$('pl').innerHTML=d.p.map(x=>`<table><tr><th>${x.n}</th><th>${x.t}</th></tr><tr><td>${x.a||'—'}</td><td>${x.met} متر</td></tr><tr><td>${x.t=='فروش'?'قیمت '+x.price:'ودیعه '+(x.dep||x.fd)+' / اجاره '+x.r}</td><td><button class="danger" onclick="del('p',${x.id})">حذف</button></td></tr></table>`).join('')||'<p class="muted">موردی ثبت نشده.</p>';
+$('selc').innerHTML='<option value="">انتخاب مشتری</option>'+d.c.map(x=>`<option value="${x.id}">${x.n} — ${x.t}</option>`).join('');
+$('xl').innerHTML=d.x.map(x=>`<table><tr><th>${x.n}</th><td>${x.p}</td><td>${x.note||''}</td><td><button class="danger" onclick="del('x',${x.id})">حذف</button></td></tr></table>`).join('')||'<p>مخاطبی ثبت نشده.</p>';tc();tp();if($('selc').value)match()}
+function match(){let c=d.c.find(x=>x.id==$('selc').value);if(!c){$('ml').innerHTML='';return}let z=d.p.filter(p=>(c.t=='خرید'?p.t=='فروش':p.t==c.t)&&p.met>=c.min&&p.met<=c.max&&(!c.bed||!p.bed||p.bed>=c.bed)&&(c.t!='خرید'||(p.price>=c.minp&&p.price<=c.maxp))&&(c.t!='اجاره'||(p.dep<=c.dep&&p.r<=c.r))&&(c.t!='رهن کامل'||p.fd<=c.fd));$('ml').innerHTML=z.map(p=>`<table><tr><th>${p.n}</th><th>${p.t}</th></tr><tr><td>${p.a||'—'} · ${p.met} متر</td><td>${p.addr||''}</td></tr><tr><td colspan="2">📞 ${p.m||'—'}</td></tr></table>`).join('')||'<p>ملک منطبق پیدا نشد.</p>'}
+function saveX(){if(!v('xn')||!v('xp'))return alert('نام و موبایل الزامی است');d.x.push({id:Date.now(),n:v('xn'),p:v('xp'),note:v('xx')});['xn','xp','xx'].forEach(x=>$(x).value='');save()}
+function csv(){let s='نام,موبایل,توضیح\n'+d.x.map(x=>`"${x.n}","${x.p}","${x.note||''}"`).join('\n');let a=document.createElement('a');a.href=URL.createObjectURL(new Blob(['\ufeff'+s],{type:'text/csv'}));a.download='contacts.csv';a.click()}
+function backup(){let a=document.createElement('a');a.href=URL.createObjectURL(new Blob([JSON.stringify(d)],{type:'application/json'}));a.download='amlakman-backup.json';a.click()}
+function restore(e){let r=new FileReader();r.onload=()=>{try{d=JSON.parse(r.result);save();alert('بازیابی انجام شد')}catch(_){alert('فایل نامعتبر است')}};r.readAsText(e.target.files[0])}
+tc();tp();render();
+</script></body></html>

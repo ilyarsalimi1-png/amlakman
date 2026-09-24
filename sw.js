@@ -1,0 +1,1 @@
+const C='amlakman-v5';self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(C).then(c=>c.add('./index.html')))});self.addEventListener('activate',e=>e.waitUntil(self.clients.claim()));
